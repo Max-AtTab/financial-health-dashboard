@@ -1,0 +1,11 @@
+.DS_Store
+*.xlsx
+*.zip
+*.ndjson
+*.json
+!package.json
+**/service-account*.json
+**/*credential*.json
+**/*secret*.json
+.env
+.env.*

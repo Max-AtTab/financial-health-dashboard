@@ -1,0 +1,879 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>曜析數據科技顧問｜兩次見面，一份報告</title>
+<meta name="description" content="用 11 項指標看公司哪裡在流血，兩次見面、一份報告，把說不出口的問題變成看得到的紅燈">
+<script>
+/* 只有在 JS 可用、且使用者沒有要求減少動態時才開啟動畫。
+   放在 <head> 是為了避免內容先顯示再被藏起來的閃動。 */
+if (!window.matchMedia || !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  document.documentElement.classList.add('js-motion');
+}
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Noto+Sans+TC:wght@400;500;700;900&display=swap">
+<style>
+/* ═══════════════════════════════════════════════════════════
+   曜析 YAOXI 官網 — 品牌系統 v1.0
+   §4 色彩｜§5 字體｜§6 8pt｜§7 圓角｜§14 網站結構
+
+   這頁的工作是「建立信任」，不是報價。
+   還沒有客戶案例，所以改用四樣更硬的東西替代：
+   實際交付物、判斷標準、免費試用、明講不做什麼。
+
+   ⚠️ 寫文案的規則（見《範本使用說明》寫作規範）：
+   一格一句話、句中不用句號斷開、段落與條列結尾不加句號。
+   ⚠️ 中文段落在原始碼裡「不要換行」：瀏覽器會把換行變成空格，
+   畫面上就會出現「問題在哪，␣然後」這種怪空格。
+   ═══════════════════════════════════════════════════════════ */
+:root{
+  --emerald:#0EA599; --gold:#F4B942; --charcoal:#111827;
+  --gray:#E6E8EC; --white:#FFFFFF; --ink-deep:#080D15;
+  --risk:#D64545;
+  --paper:#FFFFFF; --mist:#F6F7F9;
+  --ink:#111827; --ink-2:#4B5563; --ink-3:#8A93A0;
+  --emerald-ink:#06736B; --gold-ink:#8A5D00; --risk-ink:#A32A2A;
+  --emerald-bg:#E6F6F4; --gold-bg:#FDF4E1; --risk-bg:#FBEAEA;
+  --d-text:#EDF1F5; --d-text-2:rgba(237,241,245,.72); --d-text-3:rgba(237,241,245,.48);
+  --d-line:rgba(237,241,245,.16);
+  --r-xs:6px; --r-sm:10px; --r-md:16px; --r-lg:24px;
+  --tc:"Noto Sans TC","Microsoft JhengHei",sans-serif;
+  --en:"Inter",var(--tc);
+  --mono:"JetBrains Mono","Consolas",monospace;
+  --shadow:0 1px 2px rgba(17,24,39,.04), 0 16px 42px -26px rgba(17,24,39,.3);
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%; scroll-behavior:smooth}
+body{margin:0; font-family:var(--tc); line-height:1.85; color:var(--ink);
+  background:var(--mist); -webkit-font-smoothing:antialiased;
+  line-break:strict; overflow-wrap:normal; font-size:16px}
+h1,h2,h3,h4{margin:0; line-height:1.34; text-wrap:balance; font-weight:900}
+p{margin:0; text-wrap:pretty}
+a{color:inherit}
+
+.eyebrow{font-family:var(--en); font-size:13.5px; font-weight:700;
+  letter-spacing:.18em; text-transform:uppercase; color:var(--emerald-ink); display:block}
+
+.shell{max-width:1060px; margin:0 auto; padding:0 24px}
+section{padding-block:82px}
+/* 標題與內文分開控制行寬：標題可以寬，內文維持好讀的行長 */
+.sec-head{margin-bottom:42px}
+.sec-head h2{font-size:clamp(27px,4.3vw,40px); letter-spacing:-.015em; margin-top:12px; max-width:22em}
+.sec-head p{margin-top:16px; font-size:17px; color:var(--ink-2); max-width:40em}
+.sec-head .hint{margin-top:14px; font-size:15px; font-weight:700; color:var(--emerald-ink);
+  display:flex; align-items:center; gap:8px}
+.sec-head .hint::before{content:""; width:7px; height:7px; border-radius:50%; background:var(--emerald)}
+
+/* ── 頁首 ─────────────────────────────────────── */
+.nav{position:sticky; top:0; z-index:40; background:rgba(8,13,21,.88);
+  backdrop-filter:blur(12px); border-bottom:1px solid var(--d-line)}
+.nav .shell{display:flex; align-items:center; gap:20px; height:84px}
+.brand{display:flex; align-items:center; gap:14px; text-decoration:none; color:var(--d-text)}
+.brand img{width:52px; height:auto; flex:none; display:block; transition:transform .3s cubic-bezier(.22,.61,.36,1)}
+.brand:hover img{transform:scale(1.07) rotate(-3deg)}
+.brand .wm{display:flex; flex-direction:column; line-height:1.15}
+.brand .wm b{font-size:21px; font-weight:900; letter-spacing:.2em}
+.brand .wm i{font-family:var(--en); font-size:10px; font-style:normal;
+  letter-spacing:.38em; color:var(--gold); font-weight:600}
+.nav nav{margin-left:auto; display:flex; align-items:center; gap:28px}
+.nav nav a{font-size:16px; font-weight:500; color:var(--d-text-2); text-decoration:none; transition:color .2s}
+.nav nav a:hover{color:var(--d-text)}
+.nav .cta-sm{background:var(--emerald); color:#fff; font-weight:700; font-size:15.5px;
+  padding:12px 22px; border-radius:var(--r-sm); text-decoration:none; white-space:nowrap}
+.nav .cta-sm:hover{filter:brightness(1.08); color:#fff}
+@media (max-width:820px){ .nav nav a:not(.cta-sm){display:none} .nav .shell{height:72px} .brand img{width:42px} }
+
+/* ── Hero ─────────────────────────────────────── */
+.hero{position:relative; color:var(--d-text); overflow:hidden; padding-block:92px 82px;
+  background:linear-gradient(168deg, #0E3B3C 0%, var(--charcoal) 44%, var(--ink-deep) 100%)}
+.hero .shell{position:relative; z-index:2}
+.hero h1{font-size:clamp(32px,5.6vw,56px); letter-spacing:-.025em; margin-top:16px;
+  text-wrap:normal; max-width:none}
+.hero .lede{margin-top:22px; font-size:18px; color:var(--d-text-2); max-width:38em}
+.hero .promise{margin-top:18px; font-family:var(--en); font-size:13.5px; letter-spacing:.2em;
+  color:var(--gold); font-weight:700}
+.hero .buttons{display:flex; gap:12px; flex-wrap:wrap; margin-top:36px}
+
+/* 背景：會慢慢飄的光暈（最底層） */
+.hero-ambient{position:absolute; inset:-20%; z-index:0; pointer-events:none;
+  background:
+    radial-gradient(34% 40% at 80% 20%, rgba(244,185,66,.17), transparent 70%),
+    radial-gradient(42% 46% at 16% 84%, rgba(14,165,153,.20), transparent 70%),
+    radial-gradient(60% 60% at 100% 0%, rgba(14,165,153,.18), transparent 60%)}
+
+/* 背景：品牌 The Rising Spark（金弧＋耀星＋數據柱） */
+.hero-arc{position:absolute; inset:0; width:100%; height:100%; pointer-events:none; z-index:1}
+.arc-line{fill:none; stroke:url(#arcG); stroke-width:3; stroke-linecap:round}
+.arc-shadow{fill:none; stroke:#0EA599; stroke-opacity:.30; stroke-width:2}
+.bars rect{fill:rgba(255,255,255,.055)}
+.star-halo{opacity:.55}
+/* ⚠️ SVG 元素一旦被 CSS 設了 transform，會「整個蓋掉」它自己的 transform 屬性。
+   所以位置一律寫在外層 <g transform="translate(...)">，CSS 動畫只加在內層群組上。
+   上一版的耀星就是這樣被搬到畫面外，只剩光暈看得到。 */
+.star-core,.star-rays,.tw{transform-box:fill-box; transform-origin:center}
+.bars rect{transform-box:fill-box; transform-origin:50% 100%}
+
+.lamps{margin-top:58px; padding-top:28px; border-top:1px solid var(--d-line)}
+.lamps .cap{font-family:var(--mono); font-size:13px; color:var(--d-text-3); margin-bottom:16px}
+.lamps .strip{display:grid; grid-template-columns:repeat(11,1fr); gap:6px}
+.lamps .lamp{display:flex; flex-direction:column; gap:9px}
+.lamps .lamp i{display:block; height:6px; border-radius:99px; transform-origin:left center}
+.lamps .lamp span{font-size:12px; color:var(--d-text-3); line-height:1.45}
+.lamps .l-r i{background:var(--risk)} .lamps .l-r span{color:#F0A0A0; font-weight:700}
+.lamps .l-y i{background:var(--gold)} .lamps .l-y span{color:#E7C583}
+.lamps .l-g i{background:var(--emerald)}
+@media (max-width:900px){ .lamps .strip{grid-template-columns:repeat(6,1fr); gap:11px} }
+@media (max-width:520px){ .lamps .strip{grid-template-columns:repeat(3,1fr); gap:11px} }
+
+/* ── 按鈕 ─────────────────────────────────────── */
+.btn{display:inline-flex; align-items:center; justify-content:center; gap:9px;
+  padding:16px 30px; border-radius:var(--r-sm); text-decoration:none;
+  font-size:17px; font-weight:700; letter-spacing:.02em; border:1px solid transparent;
+  transition:filter .2s, background .2s, color .2s, transform .2s}
+.btn-primary{background:var(--emerald); color:#fff}
+.btn-primary:hover{filter:brightness(1.09); color:#fff; transform:translateY(-1px)}
+.btn-ghost{border-color:var(--d-line); color:var(--d-text)}
+.btn-ghost:hover{background:rgba(237,241,245,.08); color:var(--d-text)}
+.btn-outline{border-color:var(--emerald); color:var(--emerald-ink); background:var(--emerald-bg)}
+.btn-outline:hover{background:var(--emerald); color:#fff}
+.btn:focus-visible{outline:2px solid var(--gold); outline-offset:3px}
+
+/* ── Problem ──────────────────────────────────── */
+#problem{background:var(--paper)}
+.pain{font-size:clamp(20px,2.9vw,27px); font-weight:700; line-height:1.68;
+  max-width:30em; color:var(--ink); text-wrap:normal}
+.pain em{font-style:normal; color:var(--risk-ink)}
+.quotes{display:grid; grid-template-columns:repeat(auto-fit,minmax(252px,1fr));
+  gap:0; margin-top:46px; border-top:1px solid var(--gray)}
+.quote{padding:28px 24px 28px 0; border-bottom:1px solid var(--gray); transition:padding-left .3s ease}
+.quote:hover{padding-left:10px}
+.quote .tag{font-family:var(--en); font-size:12px; font-weight:700; letter-spacing:.18em;
+  text-transform:uppercase; color:var(--ink-3); display:block; margin-bottom:11px}
+.quote .q{font-size:18px; font-weight:700; line-height:1.62}
+.quote .s{margin-top:9px; font-size:15.5px; color:var(--ink-2)}
+
+/* ── Solution ─────────────────────────────────── */
+#solution{background:var(--mist)}
+.flow{display:grid; grid-template-columns:repeat(auto-fit,minmax(214px,1fr)); gap:16px}
+.flow .node{background:var(--paper); border:1px solid var(--gray); border-radius:var(--r-md); padding:26px}
+.flow .node .k{font-family:var(--en); font-size:12px; font-weight:700; letter-spacing:.16em;
+  text-transform:uppercase; color:var(--gold-ink)}
+.flow .node h3{font-size:21px; margin:11px 0 9px}
+.flow .node p{font-size:15.5px; color:var(--ink-2)}
+.four{display:grid; grid-template-columns:repeat(auto-fit,minmax(176px,1fr)); gap:1px;
+  background:var(--gray); border:1px solid var(--gray); border-radius:var(--r-md);
+  overflow:hidden; margin-top:38px}
+.four div{background:var(--paper); padding:24px 22px}
+.four .n{font-family:var(--mono); font-size:13px; color:var(--emerald-ink); font-weight:700}
+.four h4{font-size:17.5px; margin:9px 0 7px}
+.four p{font-size:14.5px; color:var(--ink-2)}
+
+/* ── 服務＝互動式階梯 ─────────────────────────── */
+#services{background:var(--paper)}
+.ladder{display:flex; flex-direction:column}
+.svc{border:1px solid var(--gray); border-radius:var(--r-md); background:var(--mist);
+  overflow:hidden; transition:border-color .2s, box-shadow .2s, transform .2s}
+.svc:hover{transform:translateY(-2px)}
+.svc[data-open="true"]{border-color:var(--emerald); box-shadow:var(--shadow); background:var(--paper)}
+.svc.start{border-color:var(--emerald)}
+.svc-btn{width:100%; appearance:none; border:0; background:transparent; cursor:pointer;
+  font:inherit; color:inherit; text-align:left; padding:26px 28px;
+  display:grid; grid-template-columns:auto minmax(0,1fr) auto; gap:18px; align-items:center}
+.svc-btn:focus-visible{outline:2px solid var(--emerald); outline-offset:-3px}
+.svc-btn .dot{width:13px; height:13px; border-radius:50%; background:var(--gray); flex:none}
+.svc.start .svc-btn .dot,.svc[data-open="true"] .svc-btn .dot{background:var(--emerald)}
+.svc-btn .lv{font-family:var(--en); font-size:12.5px; font-weight:700; letter-spacing:.18em;
+  color:var(--emerald-ink); display:block}
+.svc-btn h3{font-size:23px; margin-top:6px}
+.svc-btn .one{margin-top:7px; font-size:16px; color:var(--ink-2); display:block}
+.svc-btn .chev{width:15px; height:15px; border-right:2.5px solid var(--ink-3);
+  border-bottom:2.5px solid var(--ink-3); transform:rotate(45deg); transition:transform .25s;
+  flex:none; margin-right:6px}
+.svc[data-open="true"] .svc-btn .chev{transform:rotate(-135deg); border-color:var(--emerald)}
+.svc-panel{display:none; padding:0 28px 28px; border-top:1px solid var(--gray); margin-top:2px}
+.svc[data-open="true"] .svc-panel{display:block; animation:drop .3s ease both}
+@keyframes drop{from{opacity:0; transform:translateY(-6px)} to{opacity:1; transform:none}}
+.svc-panel .grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(230px,1fr)); gap:22px; padding-top:24px}
+.svc-panel .blk h4{font-size:12.5px; font-family:var(--en); letter-spacing:.16em;
+  text-transform:uppercase; color:var(--ink-3); font-weight:700; margin-bottom:9px}
+.svc-panel .blk p,.svc-panel .blk li{font-size:15.5px; color:var(--ink-2); line-height:1.8}
+.svc-panel ul{margin:0; padding-left:20px}
+.svc-panel ul li::marker{color:var(--emerald)}
+.topics-inline{margin-top:22px; padding-top:20px; border-top:1px dashed var(--gray)}
+.topics-inline h4{font-size:12.5px; font-family:var(--en); letter-spacing:.16em;
+  text-transform:uppercase; color:var(--ink-3); font-weight:700; margin-bottom:12px}
+.topic-chips{display:flex; flex-wrap:wrap; gap:9px}
+.topic-chips span{font-size:14.5px; background:var(--mist); border:1px solid var(--gray);
+  border-radius:999px; padding:7px 15px; color:var(--ink-2)}
+.gate{display:flex; align-items:center; gap:13px; padding:18px 28px;
+  color:var(--gold-ink); font-size:15.5px; font-weight:700}
+.gate::before{content:""; width:2px; height:28px; background:var(--gold); border-radius:2px; flex:none}
+
+/* ── 憑什麼信我們 ─────────────────────────────── */
+#trust{background:var(--mist)}
+.honest{background:var(--paper); border-left:4px solid var(--gold); border-radius:0 var(--r-md) var(--r-md) 0;
+  padding:26px 30px; margin-bottom:38px; font-size:17px; color:var(--ink-2); max-width:46em; line-height:1.9}
+.honest b{color:var(--ink)}
+.proofs{display:grid; grid-template-columns:repeat(auto-fit,minmax(262px,1fr)); gap:16px}
+.proof{background:var(--paper); border:1px solid var(--gray); border-radius:var(--r-md);
+  padding:26px; display:flex; flex-direction:column; gap:11px;
+  transition:transform .2s, box-shadow .2s, border-color .2s}
+.proof:hover{transform:translateY(-3px); box-shadow:var(--shadow); border-color:var(--emerald)}
+.proof .ico{width:42px; height:42px; border-radius:var(--r-sm); background:var(--emerald-bg);
+  display:grid; place-items:center; flex:none}
+.proof .ico svg{width:21px; height:21px; stroke:var(--emerald-ink); stroke-width:2;
+  fill:none; stroke-linecap:round; stroke-linejoin:round}
+.proof h3{font-size:19px}
+.proof p{font-size:15.5px; color:var(--ink-2)}
+.proof .act{margin-top:auto; padding-top:8px; font-size:15px; font-weight:700;
+  color:var(--emerald-ink); text-decoration:none}
+.proof .act:hover{text-decoration:underline}
+.nots{margin-top:30px; background:var(--paper); border:1px solid var(--gray);
+  border-radius:var(--r-md); padding:26px 30px}
+.nots h3{font-size:19px; margin-bottom:14px}
+.nots .two{display:grid; grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); gap:24px}
+.nots h4{font-size:13px; font-family:var(--en); letter-spacing:.16em; text-transform:uppercase;
+  font-weight:700; margin-bottom:9px}
+.nots .do h4{color:var(--emerald-ink)} .nots .dont h4{color:var(--risk-ink)}
+.nots ul{margin:0; padding-left:20px}
+.nots li{font-size:15.5px; color:var(--ink-2); line-height:1.8}
+.nots .do li::marker{color:var(--emerald)} .nots .dont li::marker{color:var(--risk)}
+
+/* ── 價格：只說怎麼算，不掛數字 ────────────────── */
+#price-note{background:var(--paper)}
+.pricebox{background:var(--mist); border:1px solid var(--gray); border-radius:var(--r-lg);
+  padding:34px 34px 30px; max-width:52em}
+.pricebox p{font-size:17px; color:var(--ink-2); margin-bottom:16px}
+.pricebox p:last-of-type{margin-bottom:26px}
+.pricebox b{color:var(--ink)}
+.pricebox .buttons{display:flex; gap:12px; flex-wrap:wrap}
+
+/* ── FAQ ──────────────────────────────────────── */
+#faq{background:var(--mist)}
+.faq-list{border-top:1px solid var(--gray)}
+details{border-bottom:1px solid var(--gray)}
+summary{cursor:pointer; list-style:none; padding:22px 44px 22px 0; position:relative;
+  font-size:18px; font-weight:700; line-height:1.6}
+summary::-webkit-details-marker{display:none}
+summary::after{content:""; position:absolute; right:10px; top:50%; width:12px; height:12px;
+  margin-top:-8px; border-right:2.5px solid var(--ink-3); border-bottom:2.5px solid var(--ink-3);
+  transform:rotate(45deg); transition:transform .25s}
+details[open] summary::after{transform:rotate(225deg); margin-top:-3px}
+summary:focus-visible{outline:2px solid var(--emerald); outline-offset:-2px; border-radius:var(--r-xs)}
+details .a{padding:0 0 24px; font-size:16.5px; color:var(--ink-2); max-width:44em}
+
+/* ── CTA ──────────────────────────────────────── */
+#cta{color:var(--d-text);
+  background:
+    radial-gradient(100% 90% at 0% 100%, rgba(244,185,66,.18) 0%, transparent 56%),
+    linear-gradient(150deg, var(--charcoal) 0%, #0E3B3C 100%)}
+#cta h2{font-size:clamp(28px,4.5vw,42px); letter-spacing:-.02em; max-width:18em; margin-top:16px}
+#cta p{margin-top:18px; font-size:17.5px; color:var(--d-text-2); max-width:34em}
+#cta .buttons{display:flex; gap:12px; flex-wrap:wrap; margin-top:34px}
+#cta .tiny{margin-top:22px; font-size:14px; color:var(--d-text-3)}
+
+footer{background:var(--ink-deep); color:var(--d-text-3); padding-block:44px; font-size:14px}
+footer .shell{display:flex; justify-content:space-between; gap:18px; flex-wrap:wrap; line-height:1.9}
+footer b{color:var(--d-text-2); font-weight:700}
+
+/* ═══════════════════════════════════════════════════════════
+   動態
+   主角是品牌的 The Rising Spark：金弧畫出來 → 耀星點亮 →
+   一道光沿著金弧不斷往上跑（背景持續是活的），
+   周圍小星星錯開閃爍、數據柱輕輕起伏、光暈慢慢飄。
+   安全網：預設全部可見；只有 JS 載入成功才加 html.js-motion。
+   ═══════════════════════════════════════════════════════════ */
+html:not(.js-motion) .comet{display:none}
+
+.js-motion .hero-ambient{animation:drift 22s ease-in-out infinite alternate}
+@keyframes drift{from{transform:translate3d(-3%,2%,0) scale(1)} to{transform:translate3d(3%,-3%,0) scale(1.06)}}
+
+.js-motion .bars rect{animation:barPulse 5s ease-in-out infinite}
+@keyframes barPulse{0%,100%{transform:scaleY(1)} 50%{transform:scaleY(.8)}}
+
+.js-motion .star-core{opacity:0;
+  animation:ignite .9s 2.1s cubic-bezier(.22,.61,.36,1) forwards, twinkle 3.8s 3.1s ease-in-out infinite}
+@keyframes ignite{0%{opacity:0; transform:scale(.15)} 60%{opacity:1; transform:scale(1.2)} 100%{opacity:1; transform:scale(1)}}
+@keyframes twinkle{0%,100%{transform:scale(1) rotate(0deg)} 50%{transform:scale(1.13) rotate(7deg)}}
+
+.js-motion .star-rays{opacity:0; animation:fadeIn 1.2s 2.3s ease forwards, spin 40s 2.3s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+.js-motion .star-halo{opacity:0; animation:haloIn 1s 2.1s ease forwards, breathe 5.5s 3.1s ease-in-out infinite}
+@keyframes haloIn{to{opacity:.55}}
+@keyframes breathe{0%,100%{opacity:.35} 50%{opacity:.7}}
+
+.js-motion .tw{animation:tw 3s ease-in-out infinite}
+@keyframes tw{0%,100%{opacity:.2; transform:scale(.55)} 50%{opacity:1; transform:scale(1)}}
+
+.js-motion .hero .rise{opacity:0; transform:translateY(16px);
+  animation:riseIn .8s cubic-bezier(.22,.61,.36,1) forwards}
+@keyframes riseIn{to{opacity:1; transform:none}}
+.js-motion .hero .rise:nth-child(1){animation-delay:.05s}
+.js-motion .hero .rise:nth-child(2){animation-delay:.16s}
+.js-motion .hero .rise:nth-child(3){animation-delay:.30s}
+.js-motion .hero .rise:nth-child(4){animation-delay:.42s}
+.js-motion .hero .rise:nth-child(5){animation-delay:.52s}
+.js-motion .hero .rise:nth-child(6){animation-delay:.64s}
+
+.js-motion .lamps .lamp i{transform:scaleX(0); animation:lampOn .5s cubic-bezier(.22,.61,.36,1) forwards}
+@keyframes lampOn{to{transform:scaleX(1)}}
+.js-motion .lamps .lamp span{opacity:0; animation:fadeIn .5s ease forwards}
+@keyframes fadeIn{to{opacity:1}}
+
+.js-motion .reveal{opacity:0; transform:translateY(20px)}
+.js-motion .reveal.in{opacity:1; transform:none;
+  transition:opacity .75s ease, transform .75s cubic-bezier(.22,.61,.36,1)}
+
+@media (max-width:720px){
+  section{padding-block:62px}
+  .svc-btn{grid-template-columns:auto minmax(0,1fr); gap:14px}
+  .svc-btn .chev{grid-column:2; justify-self:end; margin-top:-28px}
+  .quote{padding-right:0}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important; animation:none!important; scroll-behavior:auto}}
+</style>
+</head>
+<body>
+
+<div class="nav">
+  <div class="shell">
+    <a class="brand" href="#top">
+      <img src="data:image/png;base64,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" alt="" width="164" height="128">
+      <span class="wm"><b>曜 析</b><i>YAOXI</i></span>
+    </a>
+    <nav>
+      <a href="#problem">為什麼需要</a>
+      <a href="#solution">怎麼做</a>
+      <a href="#services">服務</a>
+      <a href="#trust">憑什麼信我們</a>
+      <a href="#faq">常見問題</a>
+      <a class="cta-sm" href="check.html">免費快篩</a>
+    </nav>
+  </div>
+</div>
+
+<!-- ══════ Hero ══════ -->
+<section class="hero" id="top">
+  <div class="hero-ambient" aria-hidden="true"></div>
+
+  <!-- 品牌 The Rising Spark。xMaxYMin：讓右上角的耀星在任何螢幕比例都不會被裁掉 -->
+  <svg class="hero-arc" viewBox="0 0 1200 560" preserveAspectRatio="xMaxYMin slice" aria-hidden="true">
+    <defs>
+      <linearGradient id="arcG" x1="0" y1="1" x2="1" y2="0">
+        <stop offset="0%" stop-color="#F4B942" stop-opacity="0"/>
+        <stop offset="45%" stop-color="#F4B942" stop-opacity=".38"/>
+        <stop offset="100%" stop-color="#F4B942" stop-opacity="1"/>
+      </linearGradient>
+      <radialGradient id="glowG">
+        <stop offset="0%" stop-color="#F4B942" stop-opacity=".6"/>
+        <stop offset="100%" stop-color="#F4B942" stop-opacity="0"/>
+      </radialGradient>
+      <radialGradient id="cometG">
+        <stop offset="0%" stop-color="#FFF3CF" stop-opacity="1"/>
+        <stop offset="40%" stop-color="#F4B942" stop-opacity=".8"/>
+        <stop offset="100%" stop-color="#F4B942" stop-opacity="0"/>
+      </radialGradient>
+      <path id="star4" d="M0,-1 C0.03,-0.14 0.14,-0.03 1,0 C0.14,0.03 0.03,0.14 0,1 C-0.03,0.14 -0.14,0.03 -1,0 C-0.14,-0.03 -0.03,-0.14 0,-1 Z"/>
+      <linearGradient id="flareH" gradientUnits="userSpaceOnUse" x1="-72" y1="0" x2="72" y2="0">
+        <stop offset="0%" stop-color="#F4B942" stop-opacity="0"/>
+        <stop offset="50%" stop-color="#FFE9B0" stop-opacity=".9"/>
+        <stop offset="100%" stop-color="#F4B942" stop-opacity="0"/>
+      </linearGradient>
+      <linearGradient id="flareV" gradientUnits="userSpaceOnUse" x1="0" y1="-52" x2="0" y2="52">
+        <stop offset="0%" stop-color="#F4B942" stop-opacity="0"/>
+        <stop offset="50%" stop-color="#FFE9B0" stop-opacity=".9"/>
+        <stop offset="100%" stop-color="#F4B942" stop-opacity="0"/>
+      </linearGradient>
+    </defs>
+
+    <!-- 數據柱（取自品牌書的網站 Hero 樣稿），輕輕起伏 -->
+    <g class="bars">
+      <rect x="700" y="530" width="16" height="30" rx="4" style="animation-delay:0s"/>
+      <rect x="734" y="522" width="16" height="38" rx="4" style="animation-delay:.3s"/>
+      <rect x="768" y="512" width="16" height="48" rx="4" style="animation-delay:.6s"/>
+      <rect x="802" y="498" width="16" height="62" rx="4" style="animation-delay:.9s"/>
+      <rect x="836" y="482" width="16" height="78" rx="4" style="animation-delay:1.2s"/>
+      <rect x="870" y="462" width="16" height="98" rx="4" style="animation-delay:1.5s"/>
+      <rect x="904" y="440" width="16" height="120" rx="4" style="animation-delay:1.8s"/>
+      <rect x="938" y="414" width="16" height="146" rx="4" style="animation-delay:2.1s"/>
+      <rect x="972" y="386" width="16" height="174" rx="4" style="animation-delay:2.4s"/>
+      <rect x="1006" y="354" width="16" height="206" rx="4" style="animation-delay:2.7s"/>
+      <rect x="1040" y="320" width="16" height="240" rx="4" style="animation-delay:3s"/>
+      <rect x="1074" y="282" width="16" height="278" rx="4" style="animation-delay:3.3s"/>
+      <rect x="1108" y="240" width="16" height="320" rx="4" style="animation-delay:3.6s"/>
+      <rect x="1142" y="196" width="16" height="364" rx="4" style="animation-delay:3.9s"/>
+    </g>
+
+    <path class="arc-shadow" d="M-40,560 C352,548 774,436 1168,70"/>
+    <path id="arcPath" class="arc-line" d="M-40,548 C340,536 760,420 1160,52"/>
+
+    <!-- 小星星，錯開節奏閃爍 -->
+    <g transform="translate(1062,148)"><g class="tw" style="animation-delay:.2s"><use href="#star4" transform="scale(9)" fill="#F4B942"/></g></g>
+    <g transform="translate(978,214)"><g class="tw" style="animation-delay:1.1s"><use href="#star4" transform="scale(5)" fill="#F4B942"/></g></g>
+    <g transform="translate(1114,196)"><g class="tw" style="animation-delay:1.9s"><use href="#star4" transform="scale(4)" fill="#FFE6A8"/></g></g>
+    <g transform="translate(906,96)"><g class="tw" style="animation-delay:.7s"><use href="#star4" transform="scale(4)" fill="#FFE6A8"/></g></g>
+    <g transform="translate(1178,156)"><g class="tw" style="animation-delay:2.4s"><use href="#star4" transform="scale(5)" fill="#F4B942"/></g></g>
+    <g transform="translate(830,300)"><g class="tw" style="animation-delay:1.5s"><use href="#star4" transform="scale(4)" fill="#F4B942"/></g></g>
+    <g transform="translate(1030,62)"><g class="tw" style="animation-delay:2.9s"><use href="#star4" transform="scale(3)" fill="#FFE6A8"/></g></g>
+
+    <!-- 一道光沿著金弧往上跑（金弧畫完後開始，無限循環） -->
+    <g class="comet" opacity="0">
+      <circle r="22" fill="url(#cometG)"/>
+      <circle r="3.5" fill="#FFF7E0"/>
+      <animateMotion dur="5.5s" begin="2.8s" repeatCount="indefinite"><mpath href="#arcPath"/></animateMotion>
+      <animate attributeName="opacity" values="0;1;1;0" keyTimes="0;.1;.86;1" dur="5.5s" begin="2.8s" repeatCount="indefinite"/>
+    </g>
+
+    <!-- 耀星：位置寫在外層，動畫只放在內層 -->
+    <g transform="translate(1160,52)">
+      <circle class="star-halo" r="78" fill="url(#glowG)"/>
+      <g class="star-rays">
+        <line x1="-72" y1="0" x2="72" y2="0" stroke="url(#flareH)" stroke-width="1"/>
+        <line x1="0" y1="-52" x2="0" y2="52" stroke="url(#flareV)" stroke-width="1"/>
+      </g>
+      <g class="star-core">
+        <use href="#star4" transform="scale(17)" fill="#F4B942"/>
+        <use href="#star4" transform="scale(7)" fill="#FFF3D1"/>
+        <circle r="1.6" fill="#FFFFFF"/>
+      </g>
+    </g>
+  </svg>
+
+  <div class="shell">
+    <span class="eyebrow rise" style="color:var(--gold)">曜析數據科技顧問</span>
+    <h1 class="rise">兩次見面，一份報告。<br>把說不出口的問題，<br>變成看得到的紅燈。</h1>
+    <p class="lede rise">很多老闆不是不努力，而是手上只有會計給的幾個數字，看不出問題到底出在哪<br>我們用 11 項指標把公司量一遍，兩週內給你一份看得懂的報告</p>
+    <p class="promise rise">讓洞察發光，驅動企業成長</p>
+    <div class="buttons rise">
+      <a class="btn btn-primary" href="check.html">先做 3 分鐘免費快篩</a>
+      <a class="btn btn-ghost" href="#services">看我們怎麼做</a>
+    </div>
+    <div class="lamps rise">
+      <p class="cap">一份報告長這樣：11 盞燈，一眼看完</p>
+      <div class="strip">
+        <div class="lamp l-r"><i></i><span>客戶流失</span></div>
+        <div class="lamp l-r"><i></i><span>關鍵人才</span></div>
+        <div class="lamp l-y"><i></i><span>現金跑道</span></div>
+        <div class="lamp l-y"><i></i><span>加班時數</span></div>
+        <div class="lamp l-y"><i></i><span>管理體質</span></div>
+        <div class="lamp l-y"><i></i><span>外部變化</span></div>
+        <div class="lamp l-g"><i></i><span>客戶集中</span></div>
+        <div class="lamp l-g"><i></i><span>產品線毛利</span></div>
+        <div class="lamp l-g"><i></i><span>損益結構</span></div>
+        <div class="lamp l-g"><i></i><span>業績達成</span></div>
+        <div class="lamp l-g"><i></i><span>經營方向</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════ Problem ══════ -->
+<section id="problem">
+  <div class="shell">
+    <div class="sec-head reveal">
+      <span class="eyebrow">為什麼需要</span>
+      <h2>問題不是沒發生，是還沒有人指給你看</h2>
+    </div>
+    <p class="pain reveal">你每個月拿到的是會計報表，不是一份診斷<br><em>想找顧問，又怕太貴，也不知道找了能拿到什麼</em></p>
+    <div class="quotes reveal">
+      <div class="quote">
+        <span class="tag">現金</span>
+        <p class="q">「帳上有獲利，但戶頭常常沒現金」</p>
+        <p class="s">月底調頭寸調到怕，明明有賺錢，卻一直擔心哪天週轉不過來</p>
+      </div>
+      <div class="quote">
+        <span class="tag">庫存</span>
+        <p class="q">「倉庫一堆賣不掉的貨，熱賣品卻常缺貨」</p>
+        <p class="s">錢都壓在庫存上，該賣的沒貨，不該囤的囤一堆</p>
+      </div>
+      <div class="quote">
+        <span class="tag">定價</span>
+        <p class="q">「營收有成長，利潤卻越來越薄」</p>
+        <p class="s">只能靠降價搶單，越做越累，越賣越沒賺頭</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════ Solution ══════ -->
+<section id="solution">
+  <div class="shell">
+    <div class="sec-head reveal">
+      <span class="eyebrow">怎麼做</span>
+      <h2>見兩次面，就能把問題講清楚</h2>
+      <p>第一次見面我們收資料、聽你說哪裡卡住，大約兩週後第二次見面，拿數據告訴你問題在哪，再一起決定先從哪裡動手</p>
+    </div>
+    <div class="flow reveal">
+      <div class="node">
+        <span class="k">看到</span>
+        <h3>症狀</h3>
+        <p>11 項指標亮出紅、黃、綠燈，哪一盞不對，數字會直接告訴你</p>
+      </div>
+      <div class="node">
+        <span class="k">找到</span>
+        <h3>病灶</h3>
+        <p>找出燈號背後的原因，例如現金吃緊，常常不是沒賺錢，而是錢收不回來</p>
+      </div>
+      <div class="node">
+        <span class="k">動手</span>
+        <h3>對策</h3>
+        <p>排出先做哪一件、這個月做什麼、誰負責，再附一張六個月的改善甘特圖</p>
+      </div>
+    </div>
+    <div class="four reveal">
+      <div><span class="n">01</span><h4>財務</h4><p>現金還能撐幾個月、錢多久收得回來、賺到的錢有沒有留下來</p></div>
+      <div><span class="n">02</span><h4>營運</h4><p>貨壓多久才賣掉、團隊加班到什麼程度、流程卡在哪裡</p></div>
+      <div><span class="n">03</span><h4>組織</h4><p>會做事的人有沒有在流失、制度是不是靠人記、決策會不會都卡在你身上</p></div>
+      <div><span class="n">04</span><h4>經營方向</h4><p>三年後要走到哪、主要靠什麼賺錢、市場有沒有在變</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════ 服務：互動式階梯 ══════ -->
+<section id="services">
+  <div class="shell">
+    <div class="sec-head reveal">
+      <span class="eyebrow">服務</span>
+      <h2>先做健檢，<br>哪裡亮紅燈，就往哪裡深入</h2>
+      <p>每一步都由報告決定，方案確定之後，再每個月陪你把它做完</p>
+      <p class="hint">點開任一項，看實際包含的內容</p>
+    </div>
+
+    <div class="ladder reveal">
+      <article class="svc start" data-open="true">
+        <button class="svc-btn" type="button" aria-expanded="true" aria-controls="p-l1">
+          <span class="dot"></span>
+          <span>
+            <span class="lv">從這裡開始</span>
+            <h3>經營健檢</h3>
+            <span class="one">見兩次面、拿一份報告，先弄清楚問題在哪</span>
+          </span>
+          <span class="chev"></span>
+        </button>
+        <div class="svc-panel" id="p-l1">
+          <div class="grid">
+            <div class="blk">
+              <h4>你會拿到什麼</h4>
+              <ul>
+                <li>一份 11 盞燈的診斷報告</li>
+                <li>一份改善方案，寫清楚先動哪一個</li>
+                <li>一張六個月的改善甘特圖</li>
+              </ul>
+            </div>
+            <div class="blk">
+              <h4>要花多久</h4>
+              <p>大約兩週、見兩次面，第一次收資料、聽你說，第二次看數據、一起決定怎麼做</p>
+            </div>
+            <div class="blk">
+              <h4>誰適合做</h4>
+              <p>覺得公司哪裡怪怪的卻說不上來，或數字看起來還行、心裡卻不踏實的老闆</p>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <p class="gate">報告亮紅燈，再往下一階</p>
+
+      <article class="svc" data-open="false">
+        <button class="svc-btn" type="button" aria-expanded="false" aria-controls="p-l2">
+          <span class="dot"></span>
+          <span>
+            <span class="lv">紅燈才做</span>
+            <h3>根因深掘</h3>
+            <span class="one">挑一盞紅燈往下挖四到六週，找出它為什麼會發生</span>
+          </span>
+          <span class="chev"></span>
+        </button>
+        <div class="svc-panel" id="p-l2">
+          <div class="grid">
+            <div class="blk">
+              <h4>你會拿到什麼</h4>
+              <ul>
+                <li>那個主題的根因報告</li>
+                <li>具體怎麼改的設計，不是空泛建議</li>
+              </ul>
+            </div>
+            <div class="blk">
+              <h4>為什麼需要</h4>
+              <p>有些問題一次健檢挖不到底，像是制度、文化、經營方向，甚至手上的數字準不準，都需要時間才看得清</p>
+            </div>
+            <div class="blk">
+              <h4>要花多久</h4>
+              <p>四到六週，交出主題報告就結案，不會無限期拖下去</p>
+            </div>
+          </div>
+          <div class="topics-inline">
+            <h4>可以深入的七個主題</h4>
+            <div class="topic-chips">
+              <span>財務體質</span><span>獲利結構</span><span>業績與市場</span><span>組織與人力</span><span>制度與管理</span><span>經營方向</span><span>全面轉型／數位導入</span>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <p class="gate">方案定了，需要有人每月盯著</p>
+
+      <article class="svc" data-open="false">
+        <button class="svc-btn" type="button" aria-expanded="false" aria-controls="p-l3">
+          <span class="dot"></span>
+          <span>
+            <span class="lv">執行與追蹤</span>
+            <h3>陪跑訂閱</h3>
+            <span class="one">每個月看一次數字，確認改善有沒有真的發生，沒有就一起調整</span>
+          </span>
+          <span class="chev"></span>
+        </button>
+        <div class="svc-panel" id="p-l3">
+          <div class="grid">
+            <div class="blk">
+              <h4>你會拿到什麼</h4>
+              <ul><li>每月一次的數據回檢</li><li>月報</li><li>下個月該調整什麼的建議</li></ul>
+            </div>
+            <div class="blk">
+              <h4>為什麼需要</h4>
+              <p>找到問題只是開始，真正難的是接下來半年有沒有人一直盯著</p>
+            </div>
+            <div class="blk">
+              <h4>要花多久</h4>
+              <p>按月進行，建議至少六個月，太短看不出改善是否真的發生</p>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <p class="gate">還在草創期，可以從這裡開始</p>
+
+      <article class="svc" data-open="false">
+        <button class="svc-btn" type="button" aria-expanded="false" aria-controls="p-st">
+          <span class="dot"></span>
+          <span>
+            <span class="lv">另一個入口</span>
+            <h3>新創啟動健檢</h3>
+            <span class="one">還在起步階段的話，先把商業模式、三年計畫、現金能撐多久、股權怎麼分一次打好底</span>
+          </span>
+          <span class="chev"></span>
+        </button>
+        <div class="svc-panel" id="p-st">
+          <div class="grid">
+            <div class="blk">
+              <h4>你會拿到什麼</h4>
+              <ul>
+                <li>四大關鍵行動檢核</li>
+                <li>三年營運計畫書，可以拿去和銀行或投資人說明</li>
+                <li>三年財務與融資規劃、現金跑道監控表</li>
+                <li>合夥人股權協議與 Vesting</li>
+                <li>執行甘特圖</li>
+              </ul>
+            </div>
+            <div class="blk">
+              <h4>為什麼需要</h4>
+              <p>新創最常倒在兩件事：錢燒完、股權談不攏，趁公司還小把底打好，比做大了再拆划算得多</p>
+            </div>
+            <div class="blk">
+              <h4>誰適合做</h4>
+              <p>剛創業或準備創業、營收五千萬以下的老闆，約三到四週，以工作坊方式一起完成</p>
+            </div>
+          </div>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ══════ 憑什麼信我們（取代案例）══════ -->
+<section id="trust">
+  <div class="shell">
+    <div class="sec-head reveal">
+      <span class="eyebrow">憑什麼信我們</span>
+      <h2>我們剛起步，所以直接讓你看我們怎麼做事</h2>
+    </div>
+
+    <p class="honest reveal">老實說，我們是新的團隊，<b>還沒有一長串客戶推薦可以放在這裡</b><br>與其放幾句誰都寫得出來的好評，不如直接讓你看交付物、判斷標準，以及哪些事我們不做</p>
+
+    <div class="proofs reveal">
+      <article class="proof">
+        <span class="ico"><svg viewBox="0 0 22 22"><path d="M5 2.5h8l4 4v13H5z"/><path d="M13 2.5v4h4"/><path d="M8 11h6M8 14.5h6"/></svg></span>
+        <h3>先看報告長什麼樣</h3>
+        <p>不是行銷示意圖，而是真正的交付物，我們寄一份去識別化的完整報告讓你自己判斷</p>
+        <a class="act" href="check.html">跟我們要一份 →</a>
+      </article>
+      <article class="proof">
+        <span class="ico"><svg viewBox="0 0 22 22"><path d="M3 18V9M8.5 18V4M14 18v-6M19 18V7"/></svg></span>
+        <h3>判斷標準攤開給你看</h3>
+        <p>11 項指標、每項的黃線和紅線、不同產業怎麼調整都講清楚，敢公開標準才不是隨口說</p>
+        <a class="act" href="#solution">看四大面向 →</a>
+      </article>
+      <article class="proof">
+        <span class="ico"><svg viewBox="0 0 22 22"><circle cx="11" cy="11" r="8.2"/><path d="M11 6.5v5l3.2 1.8"/></svg></span>
+        <h3>先免費試一次</h3>
+        <p>三分鐘、四個數字，馬上拿到雷達圖和一段診斷，不用留信用卡，不滿意就離開</p>
+        <a class="act" href="check.html">開始快篩 →</a>
+      </article>
+      <article class="proof">
+        <span class="ico"><svg viewBox="0 0 22 22"><path d="M11 2.5l7 3v6c0 4.4-2.9 8-7 9.2C6.9 19.5 4 15.9 4 11.5v-6z"/><path d="M8 11l2.2 2.2L14.5 9"/></svg></span>
+        <h3>你的資料只用在這一次</h3>
+        <p>你提供的數字只用於這次診斷，不對外公開、不轉給第三方，也不拿來當案例宣傳</p>
+      </article>
+    </div>
+
+    <div class="nots reveal">
+      <h3>我們做什麼、不做什麼</h3>
+      <div class="two">
+        <div class="do">
+          <h4>我們做</h4>
+          <ul>
+            <li>經營與財務的診斷</li>
+            <li>找出問題的根本原因</li>
+            <li>設計具體的改善做法</li>
+            <li>每月回檢，陪你把它做完</li>
+          </ul>
+        </div>
+        <div class="dont">
+          <h4>我們不做</h4>
+          <ul>
+            <li>不代你操作執行</li>
+            <li>不提供法律或稅務簽證</li>
+            <li>不保證特定的財務結果</li>
+            <li>不接我們判斷幫不上忙的案子</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════ 價格：只說怎麼算 ══════ -->
+<section id="price-note">
+  <div class="shell">
+    <div class="sec-head reveal">
+      <span class="eyebrow">價格</span>
+      <h2>先了解，再報價</h2>
+    </div>
+    <div class="pricebox reveal">
+      <p>每家公司的規模、狀況、要看多深都不同，網頁上掛一個固定價格對你沒有幫助：<b>太高你直接關掉，太低你反而擔心品質</b></p>
+      <p>我們會先了解你想解決什麼、範圍到哪裡，<b>再給你明確的報價，寫清楚做什麼、要多久、交付什麼</b>，沒有隱藏費用，也不會做到一半才加價</p>
+      <p>想先有個概念，最快的方式是做一次免費快篩，看完結果再談會更具體</p>
+      <div class="buttons">
+        <a class="btn btn-primary" href="check.html">先做免費快篩</a>
+        <a class="btn btn-outline" href="https://line.me/R/ti/p/@YOUR_LINE_ID" target="_blank" rel="noopener">預約了解、索取報價</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════ FAQ ══════ -->
+<section id="faq">
+  <div class="shell">
+    <div class="sec-head reveal">
+      <span class="eyebrow">常見問題</span>
+      <h2>開始之前，你可能想先知道</h2>
+    </div>
+    <div class="faq-list reveal">
+      <details open>
+        <summary>我要準備什麼？</summary>
+        <p class="a">確認合作後，我們會寄一份資料問卷，請會計、業務、人資各填一段，大約 20 到 30 分鐘就能完成</p>
+      </details>
+      <details>
+        <summary>我的數字不夠準，可以嗎？</summary>
+        <p class="a">可以，抓最近一個完整年度的數字、估算值也沒關係，重點是趨勢和結構，不確定的欄位先空著，見面時再一起補</p>
+      </details>
+      <details>
+        <summary>我提供的資料會外流嗎？</summary>
+        <p class="a">不會，你的資料只用在這次診斷，不對外公開、不轉給第三方，要引用一定先徵得你同意</p>
+      </details>
+      <details>
+        <summary>你們剛起步，我怎麼知道做得好不好？</summary>
+        <p class="a">你可以先做免費快篩，三分鐘就知道我們怎麼看數字，也可以跟我們要一份去識別化的完整報告，兩樣都不用花錢，也不需要先承諾什麼</p>
+      </details>
+      <details>
+        <summary>一定要把三項服務都做完嗎？</summary>
+        <p class="a">不用，先做經營健檢，報告哪裡亮紅燈才針對那裡深入，沒有紅燈就不需要往下做，我們不會硬推</p>
+      </details>
+      <details>
+        <summary>如果做完健檢，發現你們幫不上忙呢？</summary>
+        <p class="a">我們會直接告訴你，並建議你該找誰，有些問題需要律師、會計師或特定領域的專家，勉強接下來對雙方都沒有好處</p>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- ══════ CTA ══════ -->
+<section id="cta">
+  <div class="shell reveal">
+    <span class="eyebrow" style="color:var(--gold)">從這裡開始</span>
+    <h2>先花三分鐘，看看公司哪裡在流血</h2>
+    <p>回答四個數字，馬上拿到雷達圖和一段診斷，完全免費，看完再決定要不要往下走</p>
+    <div class="buttons">
+      <a class="btn btn-primary" href="check.html">開始免費快篩</a>
+      <a class="btn btn-ghost" href="https://line.me/R/ti/p/@YOUR_LINE_ID" target="_blank" rel="noopener">加 LINE 聊聊</a>
+    </div>
+    <p class="tiny">快篩結果是初步參考，完整判讀需要看過實際資料</p>
+  </div>
+</section>
+
+<footer>
+  <div class="shell">
+    <span><b>曜析數據科技顧問</b>　讓洞察發光，驅動企業成長</span>
+    <span>© 2026 YAOXI　本網站內容為經營管理參考，非財稅或法律意見</span>
+  </div>
+</footer>
+
+<script>
+/* ── 動態 ───────────────────────────────────────── */
+(function () {
+  if (!document.documentElement.classList.contains('js-motion')) return;
+
+  /* 金弧自己畫出來；長度要量過才準，寫死會在不同螢幕比例出錯 */
+  var arc = document.querySelector('.arc-line');
+  if (arc && arc.getTotalLength) {
+    var L = arc.getTotalLength();
+    arc.style.strokeDasharray = L;
+    arc.style.strokeDashoffset = L;
+    requestAnimationFrame(function () {
+      arc.style.transition = 'stroke-dashoffset 2s cubic-bezier(.22,.61,.36,1) .25s';
+      arc.style.strokeDashoffset = '0';
+    });
+  }
+
+  /* 11 盞燈由左而右一盞一盞亮 */
+  document.querySelectorAll('.lamps .lamp').forEach(function (lamp, i) {
+    lamp.querySelector('i').style.animationDelay = (0.85 + i * 0.055) + 's';
+    lamp.querySelector('span').style.animationDelay = (0.95 + i * 0.055) + 's';
+  });
+
+  /* 捲到才浮現 */
+  var targets = document.querySelectorAll('.reveal');
+  function showAll() { targets.forEach(function (t) { t.classList.add('in'); }); }
+  if (!('IntersectionObserver' in window)) { showAll(); return; }
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+    });
+  }, { rootMargin: '0px 0px -12% 0px', threshold: 0.08 });
+  targets.forEach(function (t) { io.observe(t); });
+  /* 安全網：萬一觀察器沒觸發，3 秒後一律顯示，不能讓內容卡在看不見 */
+  setTimeout(showAll, 3000);
+})();
+
+/* 服務階梯：點一下展開，同時只開一個，鍵盤與螢幕閱讀器都能用 */
+document.querySelectorAll('.svc-btn').forEach(function (btn) {
+  btn.addEventListener('click', function () {
+    var card = btn.closest('.svc');
+    var open = card.dataset.open === 'true';
+    document.querySelectorAll('.svc').forEach(function (c) {
+      c.dataset.open = 'false';
+      c.querySelector('.svc-btn').setAttribute('aria-expanded', 'false');
+    });
+    if (!open) {
+      card.dataset.open = 'true';
+      btn.setAttribute('aria-expanded', 'true');
+    }
+  });
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>經營健檢｜3 分鐘找出公司正在失血的地方</title>
+<meta name="description" content="曜析數據科技顧問。四個數字，看出你公司哪裡在流血、該先止哪一處。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&family=Noto+Sans+TC:wght@400;500;700;900&display=swap">
+<style>
+/* ═══════════════════════════════════════════════════════════
+   曜析 YAOXI Brand System v1.0
+   §4 色彩｜§5 字體｜§6 8pt 間距｜§7 圓角｜§10 圖示｜§12 圖表色
+   設計主張：這頁是一間暗房，健檢是把燈打開。
+   選痛點與答題在暗處進行，出結果時整頁轉亮。
+   ═══════════════════════════════════════════════════════════ */
+:root{
+  /* §4 品牌色 */
+  --emerald:#0EA599; --gold:#F4B942; --charcoal:#111827;
+  --gray:#E6E8EC; --white:#FFFFFF;
+  --ink-deep:#080D15;
+  --risk:#D64545;                        /* §12 風險＝紅 */
+  /* 亮房 */
+  --paper:#FFFFFF; --mist:#F6F7F9;
+  --ink:#111827; --ink-2:#4B5563; --ink-3:#8A93A0;
+  --emerald-ink:#06736B; --gold-ink:#8A5D00; --risk-ink:#A32A2A;
+  --emerald-bg:#E6F6F4; --gold-bg:#FDF4E1; --risk-bg:#FBEAEA;
+  /* 暗房 */
+  --d-text:#EDF1F5; --d-text-2:rgba(237,241,245,.66); --d-text-3:rgba(237,241,245,.40);
+  --d-line:rgba(237,241,245,.14); --d-surface:rgba(237,241,245,.045);
+  /* §7 圓角 */
+  --r-xs:6px; --r-sm:10px; --r-md:16px; --r-lg:24px;
+  /* §5 字體 */
+  --tc:"Noto Sans TC","Microsoft JhengHei",sans-serif;
+  --en:"Inter",var(--tc);
+  --mono:"JetBrains Mono","Consolas",monospace;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0; font-family:var(--tc); line-height:1.75; color:var(--d-text);
+  background:var(--charcoal); -webkit-font-smoothing:antialiased;
+  line-break:strict; overflow-wrap:normal;
+  transition:background-color .9s ease, color .9s ease;
+}
+/* 暗房底：深色漸層＋一點 emerald 暈開，取自品牌書的網站 Hero 樣稿 */
+body::before{
+  content:""; position:fixed; inset:0; z-index:-2; pointer-events:none;
+  background:
+    radial-gradient(120% 80% at 100% 0%, rgba(14,165,153,.22) 0%, transparent 58%),
+    linear-gradient(170deg, #0E3B3C 0%, var(--charcoal) 42%, var(--ink-deep) 100%);
+  opacity:1; transition:opacity .9s ease;
+}
+/* 亮房：出結果時整頁打開 */
+body.lit{ background:var(--mist); color:var(--ink); }
+body.lit::before{ opacity:0; }
+
+h1,h2,h3{margin:0; line-height:1.3; text-wrap:balance; font-weight:900}
+p{margin:0}
+.mono{font-family:var(--mono); font-variant-numeric:tabular-nums}
+.eyebrow{
+  font-family:var(--en); font-size:11px; font-weight:600;
+  letter-spacing:.22em; text-transform:uppercase; color:var(--gold);
+}
+
+.wrap{max-width:760px; margin:0 auto; padding:0 20px 72px; position:relative; z-index:1}
+
+/* ── 識別 ─────────────────────────────────────── */
+.masthead{display:flex; align-items:center; gap:12px; padding:30px 0 0}
+.masthead .home{display:flex; align-items:center; gap:12px; text-decoration:none; color:inherit}
+.masthead .back{margin-left:auto; font-size:13.5px; text-decoration:none;
+  color:var(--d-text-3); transition:color .2s}
+.masthead .back:hover{color:var(--gold)}
+body.lit .masthead .back{color:var(--ink-3)}
+body.lit .masthead .back:hover{color:var(--emerald-ink)}
+.mark{width:42px; height:auto; flex:none; display:block}
+.wordmark{display:flex; flex-direction:column; line-height:1.15}
+.wordmark b{font-size:16px; font-weight:900; letter-spacing:.22em}
+.wordmark span{font-family:var(--en); font-size:8.5px; letter-spacing:.42em; color:var(--gold); font-weight:500}
+body.lit .wordmark span{color:var(--gold-ink)}
+
+/* ── 簽名元素：上揚金弧＝進度儀表 ─────────────────
+   同一個物件身兼三職：品牌 logo 的核心圖形、品牌主張
+   The Rising Spark、以及「4 題填了幾題」的進度指示。 */
+.spark{position:relative; height:132px; margin:22px 0 4px}
+.spark svg{position:absolute; inset:0; width:100%; height:100%; overflow:visible}
+#arcLive{transition:stroke-dashoffset .7s cubic-bezier(.22,.61,.36,1)}
+#sparkTip{transition:transform .7s cubic-bezier(.22,.61,.36,1), opacity .5s ease}
+.spark.ignited #sparkTip{filter:drop-shadow(0 0 14px rgba(244,185,66,.85))}
+.spark-label{
+  position:absolute; right:0; bottom:-4px; text-align:right;
+  font-family:var(--mono); font-size:11px; color:var(--d-text-3); letter-spacing:.04em;
+}
+
+/* ── STEP 0：三句真心話 ───────────────────────── */
+.ask{margin:34px 0 22px}
+.ask .eyebrow{display:block; margin-bottom:10px}
+.ask h1{font-size:clamp(27px,5.4vw,40px); letter-spacing:-.01em; max-width:15em}
+.ask h1 em{font-style:normal; color:var(--gold)}
+.ask .note{margin-top:12px; color:var(--d-text-2); font-size:15px; max-width:30em}
+
+.voices{display:flex; flex-direction:column; gap:2px; margin-top:30px}
+.voice{
+  appearance:none; -webkit-appearance:none;
+  display:block; width:100%; text-align:left; cursor:pointer;
+  background:transparent; border:0; border-top:1px solid var(--d-line);
+  color:inherit; font:inherit; padding:26px 56px 26px 0;
+  position:relative; transition:padding-left .35s cubic-bezier(.22,.61,.36,1);
+}
+.voices .voice:last-child{border-bottom:1px solid var(--d-line)}
+.voice .tag{
+  font-family:var(--en); font-size:10.5px; font-weight:600; letter-spacing:.2em;
+  text-transform:uppercase; color:var(--d-text-3); display:block; margin-bottom:9px;
+  transition:color .35s ease;
+}
+.voice .line{
+  display:block;
+  font-size:clamp(19px,3.6vw,25px); font-weight:700; letter-spacing:-.01em;
+  line-height:1.5; transition:color .35s ease;
+}
+.voice .why{display:block; margin-top:8px; font-size:14.5px; color:var(--d-text-2); max-width:34em}
+/* 選中的那句留下，其他兩句淡出 —— 被戳中的體驗，不是選單 */
+.voice .pip{
+  position:absolute; right:6px; top:50%; transform:translateY(-50%);
+  width:26px; height:26px; border-radius:50%; border:1px solid var(--d-line);
+  display:grid; place-items:center; transition:all .35s ease;
+}
+.voice .pip svg{width:12px; height:12px; stroke:var(--d-text-3); stroke-width:2.2;
+  fill:none; stroke-linecap:round; stroke-linejoin:round; transition:stroke .35s ease}
+.voice:hover{padding-left:16px}
+.voice:hover .line{color:var(--gold)}
+.voice:hover .tag{color:var(--gold)}
+.voice:hover .pip{border-color:var(--gold); background:rgba(244,185,66,.12)}
+.voice:hover .pip svg{stroke:var(--gold)}
+.voice:focus-visible{outline:2px solid var(--emerald); outline-offset:4px; border-radius:var(--r-xs)}
+.voices.chosen .voice{opacity:.22; pointer-events:none}
+.voices.chosen .voice.is-on{opacity:1}
+
+/* ── STEP 1：題組 ─────────────────────────────── */
+.qhead{margin:26px 0 20px}
+.qhead h2{font-size:clamp(23px,4.4vw,31px)}
+.qhead .note{margin-top:8px; color:var(--d-text-2); font-size:15px; max-width:32em}
+.qlist{display:flex; flex-direction:column; gap:2px}
+.qcard{border-top:1px solid var(--d-line); padding:22px 0; display:grid;
+  grid-template-columns:34px minmax(0,1fr); gap:0 14px; align-items:start}
+.qlist .qcard:last-child{border-bottom:1px solid var(--d-line)}
+.qnum{font-family:var(--mono); font-size:13px; font-weight:700; color:var(--d-text-3); padding-top:3px}
+.qcard.filled .qnum{color:var(--gold)}
+.qcard label{display:block; font-size:16.5px; font-weight:700; line-height:1.5}
+.qcard .hint{font-size:13.5px; color:var(--d-text-3); margin-top:4px; max-width:34em}
+.qcard .field{grid-column:2; margin-top:12px}
+.qcard input, .qcard select{
+  width:100%; font-family:var(--mono); font-size:19px; font-weight:500;
+  color:var(--d-text); background:var(--d-surface);
+  border:1px solid var(--d-line); border-radius:var(--r-sm);
+  padding:13px 15px; transition:border-color .2s, background .2s;
+}
+.qcard select{font-family:var(--tc); font-size:15.5px}
+.qcard input::placeholder{color:var(--d-text-3); font-weight:400}
+.qcard input:focus, .qcard select:focus{
+  outline:none; border-color:var(--emerald); background:rgba(14,165,153,.10);
+}
+.qcard input:focus-visible, .qcard select:focus-visible{box-shadow:0 0 0 3px rgba(14,165,153,.22)}
+.qcard select option{background:var(--charcoal); color:var(--d-text)}
+
+/* ── 按鈕 ─────────────────────────────────────── */
+.btn{
+  appearance:none; border:0; cursor:pointer; font:inherit;
+  display:inline-flex; align-items:center; justify-content:center; gap:9px;
+  width:100%; padding:16px 26px; border-radius:var(--r-sm);
+  background:var(--emerald); color:#fff; font-size:16px; font-weight:700;
+  letter-spacing:.02em; transition:filter .2s, transform .2s;
+}
+.btn:hover{filter:brightness(1.08)}
+.btn:active{transform:translateY(1px)}
+.btn:focus-visible{outline:2px solid var(--gold); outline-offset:3px}
+.btn[disabled]{opacity:.55; cursor:default}
+.btn.ghost{background:transparent; color:var(--d-text-2); font-weight:500; font-size:14.5px;
+  padding:12px; margin-top:4px}
+.btn.ghost:hover{color:var(--d-text); filter:none}
+body.lit .btn.ghost{color:var(--ink-3)}
+body.lit .btn.ghost:hover{color:var(--ink)}
+.actions{margin-top:28px}
+
+/* ── STEP 2：結果（亮房）───────────────────────── */
+.verdict{
+  background:var(--paper); border:1px solid var(--gray); border-radius:var(--r-lg);
+  padding:30px 28px; margin-top:30px;
+  box-shadow:0 1px 2px rgba(17,24,39,.04), 0 18px 44px -28px rgba(17,24,39,.3);
+}
+.verdict-top{display:flex; align-items:center; gap:22px; flex-wrap:wrap}
+.score{display:flex; align-items:baseline; gap:6px}
+.score b{font-family:var(--mono); font-size:62px; font-weight:700; line-height:1; letter-spacing:-.03em}
+.score span{font-family:var(--mono); font-size:15px; color:var(--ink-3)}
+.lamp{
+  display:inline-flex; align-items:center; gap:8px; padding:7px 15px; border-radius:999px;
+  font-size:13.5px; font-weight:700;
+}
+.lamp i{width:9px; height:9px; border-radius:50%; flex:none}
+.lamp.red{background:var(--risk-bg); color:var(--risk-ink)}
+.lamp.red i{background:var(--risk)}
+.lamp.yellow{background:var(--gold-bg); color:var(--gold-ink)}
+.lamp.yellow i{background:var(--gold)}
+.lamp.green{background:var(--emerald-bg); color:var(--emerald-ink)}
+.lamp.green i{background:var(--emerald)}
+
+/* Chart.js 的 radar 預設 1:1，不收斂的話會撐成巨大方形把整張卡吃掉 */
+.radar-wrap{max-width:420px; margin:26px auto 4px}
+.dims{display:flex; flex-direction:column; gap:1px; margin-top:20px;
+  border-top:1px solid var(--gray)}
+.dim{display:grid; grid-template-columns:minmax(96px,auto) minmax(0,1fr) 40px;
+  gap:14px; align-items:center; padding:11px 0; border-bottom:1px solid var(--gray)}
+.dim .name{font-size:14px; color:var(--ink-2)}
+.dim .track{height:7px; background:var(--mist); border-radius:999px; overflow:hidden}
+.dim .track i{display:block; height:100%; border-radius:999px}
+.dim .val{font-family:var(--mono); font-size:14.5px; font-weight:700; text-align:right}
+
+.diagnosis{
+  margin-top:22px; padding:20px 22px; border-radius:var(--r-md);
+  background:var(--mist); border-left:3px solid var(--emerald);
+  font-size:15.5px; color:var(--ink-2); line-height:1.85;
+}
+
+/* ── 名單 ─────────────────────────────────────── */
+.capture{margin-top:22px; padding-top:26px; border-top:1px solid var(--gray)}
+.capture h3{font-size:20px; margin-bottom:6px}
+.capture .note{font-size:14.5px; color:var(--ink-2); margin-bottom:18px; max-width:36em}
+.capture .fields{display:flex; flex-direction:column; gap:10px; margin-bottom:14px}
+.capture input{
+  width:100%; font:inherit; font-size:15.5px; color:var(--ink);
+  background:var(--paper); border:1px solid var(--gray); border-radius:var(--r-sm); padding:13px 15px;
+}
+.capture input::placeholder{color:var(--ink-3)}
+.capture input:focus{outline:none; border-color:var(--emerald); box-shadow:0 0 0 3px rgba(14,165,153,.16)}
+.line-btn{
+  display:flex; align-items:center; justify-content:center; gap:9px; text-decoration:none;
+  margin-top:10px; padding:15px 24px; border-radius:var(--r-sm);
+  border:1px solid var(--emerald); color:var(--emerald-ink); background:var(--emerald-bg);
+  font-size:15px; font-weight:700; transition:background .2s, color .2s;
+}
+.line-btn:hover{background:var(--emerald); color:#fff}
+.line-btn:focus-visible{outline:2px solid var(--gold); outline-offset:3px}
+.privacy{margin-top:14px; font-size:12px; color:var(--ink-3); line-height:1.7}
+
+/* ── STEP 3：完成 ─────────────────────────────── */
+.done{
+  background:var(--paper); border:1px solid var(--gray); border-radius:var(--r-lg);
+  padding:44px 30px; margin-top:34px; text-align:center;
+}
+.done h2{font-size:27px; margin-bottom:10px}
+.done p{color:var(--ink-2); font-size:15.5px; margin-bottom:22px}
+.done .seal{width:56px; height:56px; margin:0 auto 20px}
+
+/* ── 頁尾 ─────────────────────────────────────── */
+.foot{margin-top:52px; padding-top:22px; border-top:1px solid var(--d-line);
+  font-size:12.5px; color:var(--d-text-3); line-height:1.85}
+body.lit .foot{border-color:var(--gray); color:var(--ink-3)}
+.foot b{font-weight:700; color:var(--d-text-2)}
+body.lit .foot b{color:var(--ink-2)}
+
+/* ── 步驟切換 ─────────────────────────────────── */
+.step{display:none}
+.step.active{display:block; animation:rise .5s cubic-bezier(.22,.61,.36,1) both}
+@keyframes rise{from{opacity:0; transform:translateY(14px)} to{opacity:1; transform:none}}
+
+@media (max-width:560px){
+  .qcard{grid-template-columns:1fr}
+  .qcard .field{grid-column:1}
+  .qnum{display:inline-block; margin-bottom:2px}
+  .dim{grid-template-columns:1fr 40px; row-gap:6px}
+  .dim .track{grid-column:1/-1; order:3}
+  .voice{padding-right:40px}
+  .score b{font-size:50px}
+}
+@media (prefers-reduced-motion:reduce){
+  *{animation:none!important; transition:none!important}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="masthead">
+    <a class="home" href="index.html" aria-label="回曜析數據科技顧問首頁">
+    <img class="mark" src="data:image/png;base64,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" alt="" width="265" height="207">
+    <span class="wordmark"><b>曜 析</b><span>YAOXI</span></span>
+    </a>
+    <a class="back" href="index.html">看完整服務 →</a>
+  </header>
+
+  <!-- ══════ STEP 0：三句真心話 ══════ -->
+  <section class="step active" id="step0">
+    <div class="ask">
+      <span class="eyebrow">Free Check · 3 min</span>
+      <h1>公司哪裡在流血，<em>通常不在你盯著的地方</em></h1>
+      <p class="note">下面三句話，哪一句最像你現在的處境？選一句、回答四個數字，我們告訴你失血點在哪</p>
+    </div>
+
+    <div class="voices" id="voices">
+      <button class="voice" type="button" data-mod="cash">
+        <span class="tag">Cash flow</span>
+        <span class="line">「帳上有獲利，但戶頭常常沒現金」</span>
+        <span class="why">擔心資金斷鏈、月底調頭寸，黑字倒閉的恐懼揮之不去</span>
+        <span class="pip"><svg viewBox="0 0 16 16"><path d="M3 8h10M9 4l4 4-4 4"/></svg></span>
+      </button>
+      <button class="voice" type="button" data-mod="inventory">
+        <span class="tag">Inventory</span>
+        <span class="line">「倉庫一堆賣不掉的貨，熱賣品卻常缺貨」</span>
+        <span class="why">錢都壓在庫存上，該賣的沒貨賣，不該囤的囤一堆</span>
+        <span class="pip"><svg viewBox="0 0 16 16"><path d="M3 8h10M9 4l4 4-4 4"/></svg></span>
+      </button>
+      <button class="voice" type="button" data-mod="pricing">
+        <span class="tag">Pricing</span>
+        <span class="line">「營收有成長，利潤卻越來越薄」</span>
+        <span class="why">只能靠降價搶單，越做越累，越賣越沒賺頭</span>
+        <span class="pip"><svg viewBox="0 0 16 16"><path d="M3 8h10M9 4l4 4-4 4"/></svg></span>
+      </button>
+    </div>
+  </section>
+
+  <!-- ══════ STEP 1：四個數字 ══════ -->
+  <section class="step" id="step1">
+    <!-- 簽名元素：金弧＝進度。星芒沿著弧線往上爬，四題填完就點亮 -->
+    <div class="spark" id="spark">
+      <svg viewBox="0 0 400 132" aria-hidden="true">
+        <defs>
+          <linearGradient id="arcGrad" x1="0" y1="1" x2="1" y2="0">
+            <stop offset="0%" stop-color="#F4B942" stop-opacity=".25"/>
+            <stop offset="100%" stop-color="#F4B942"/>
+          </linearGradient>
+        </defs>
+        <path id="arcBase" d="M6,122 C120,118 250,92 392,14"
+              fill="none" stroke="rgba(237,241,245,.13)" stroke-width="2" stroke-linecap="round"/>
+        <path id="arcLive" d="M6,122 C120,118 250,92 392,14"
+              fill="none" stroke="url(#arcGrad)" stroke-width="2.5" stroke-linecap="round"/>
+        <g id="sparkTip" opacity="0">
+          <path fill="#F4B942" transform="scale(9)"
+            d="M0,-1 C0.05,-0.2 0.2,-0.05 1,0 C0.2,0.05 0.05,0.2 0,1 C-0.05,0.2 -0.2,0.05 -1,0 C-0.2,-0.05 -0.05,-0.2 0,-1 Z"/>
+        </g>
+      </svg>
+      <span class="spark-label" id="sparkLabel">0 / 4</span>
+    </div>
+
+    <div class="qhead">
+      <span class="eyebrow" id="qEyebrow">Module</span>
+      <h2 id="qTitle"></h2>
+      <p class="note">四個數字抓大概就好，不用翻報表翻到懷疑人生，不確定的就填你印象中的數字</p>
+    </div>
+
+    <div class="qlist" id="questions"></div>
+
+    <div class="actions">
+      <button class="btn" type="button" onclick="showResult()">看我的健檢結果</button>
+      <button class="btn ghost" type="button" onclick="backToVoices()">← 換一句話</button>
+    </div>
+  </section>
+
+  <!-- ══════ STEP 2：結果 ══════ -->
+  <section class="step" id="step2">
+    <div class="verdict">
+      <div class="verdict-top">
+        <span class="score"><b class="mono" id="totalScore">--</b><span>/ 100</span></span>
+        <span class="lamp" id="gradeTag"><i></i><span id="gradeText">--</span></span>
+      </div>
+
+      <div class="radar-wrap"><canvas id="radar" height="300"></canvas></div>
+      <div class="dims" id="dimBars"></div>
+      <p class="diagnosis" id="diagText"></p>
+
+      <div class="capture">
+        <h3>把完整版診斷報告寄給我</h3>
+        <p class="note">內容包含各維度的病灶解讀、優先處理順序，以及和同業水準的差距</p>
+        <div class="fields">
+          <input type="text"  id="leadName"    placeholder="怎麼稱呼您（必填）" autocomplete="name">
+          <input type="text"  id="leadCompany" placeholder="公司名稱" autocomplete="organization">
+          <input type="email" id="leadEmail"   placeholder="Email（報告寄送用，必填）" autocomplete="email">
+        </div>
+        <button class="btn" type="button" id="sendBtn" onclick="submitLead()">寄給我完整報告</button>
+        <a class="line-btn" id="lineBtn" href="https://line.me/R/ti/p/@YOUR_LINE_ID" target="_blank" rel="noopener">
+          加 LINE 好友，預約 30 分鐘免費解讀
+        </a>
+        <p class="privacy">我們只用這些資料寄送報告與後續聯繫，不會提供給第三方</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════ STEP 3：完成 ══════ -->
+  <section class="step" id="step3">
+    <div class="done">
+      <svg class="seal" viewBox="0 0 48 48" aria-hidden="true">
+        <circle cx="24" cy="24" r="22" fill="#E6F6F4"/>
+        <path d="M15 24.5l6.5 6.5L34 18" fill="none" stroke="#0EA599" stroke-width="3.2"
+              stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <h2 id="doneTitle">報告已寄出</h2>
+      <p id="doneDesc">請到信箱查收，若沒收到請看一下垃圾郵件匣<br>想更快搞懂報告，可以加 LINE 直接跟顧問聊</p>
+      <a class="line-btn" href="https://line.me/R/ti/p/@YOUR_LINE_ID" target="_blank" rel="noopener"
+         style="max-width:340px;margin:0 auto">
+        加 LINE 好友，預約免費解讀
+      </a>
+    </div>
+  </section>
+
+  <footer class="foot">
+    <b>曜析數據科技顧問</b>　讓洞察發光，驅動企業成長<br>
+    本結果為初步診斷參考，完整判讀請洽顧問
+  </footer>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<script>
+/* ════════════════════════════════════════════════════════
+   ① 設定區：Apps Script 網址（部署後貼上）
+   ════════════════════════════════════════════════════════ */
+const GAS_URL = "https://script.google.com/macros/s/AKfycbzPP_tkuct3w5cucmWoxvddW2T4qhxL-t7Tuscdg0_IPRUPidGjhT-QB8D_6wqIR98z/exec";
+
+/* ════════════════════════════════════════════════════════
+   ② 題組定義：3 模組 × 4 題
+   ════════════════════════════════════════════════════════ */
+const MODULES = {
+  cash: {
+    title: "資金周轉健檢",
+    axes: ["現金造血力","財務抗壓性","收款效率","付款餘裕","周轉健康度"],
+    questions: [
+      {id:"fixedCost", label:"每月平均固定支出（元）", hint:"房租、薪資、貸款等每月一定要付的錢", type:"number", ph:"例：800000"},
+      {id:"cash",      label:"目前帳上可動用現金（元）", hint:"隨時能動用的活存＋短期可變現部位", type:"number", ph:"例：2400000"},
+      {id:"arDays",    label:"平均應收帳款天數（AR Days）", hint:"開發票後平均幾天收到錢", type:"number", ph:"例：60"},
+      {id:"apDays",    label:"平均應付帳款天數（AP Days）", hint:"收到供應商發票後平均幾天付款", type:"number", ph:"例：30"}
+    ]
+  },
+  inventory: {
+    title: "產銷平衡健檢",
+    axes: ["需求預測準確度","存貨去化能力","供應鏈彈性","資金積壓風險","缺貨風險控制"],
+    questions: [
+      {id:"leadTime",  label:"平均備貨前置時間（天）", hint:"從下單補貨到貨進倉庫要幾天", type:"number", ph:"例：21"},
+      {id:"invDays",   label:"存貨周轉天數（天）", hint:"平均庫存 ÷ 每日銷貨成本，抓大概即可", type:"number", ph:"例：75"},
+      {id:"stockouts", label:"過去一季嚴重缺貨次數", hint:"熱賣品斷貨、影響出貨的次數", type:"number", ph:"例：2"},
+      {id:"deadStock", label:"呆滯物料佔總庫存比例（%）", hint:"超過 6 個月沒動的庫存佔比", type:"number", ph:"例：15"}
+    ]
+  },
+  pricing: {
+    title: "定價與獲利健檢",
+    axes: ["品牌溢價能力","毛利健康度","成本轉嫁力","價格防禦力","獲利結構穩定度"],
+    questions: [
+      {id:"margin",   label:"核心產品/服務平均毛利率（%）", hint:"（售價－直接成本）÷ 售價", type:"number", ph:"例：35"},
+      {id:"priceGap", label:"與主要競爭對手的價差（%）", hint:"比對手貴填正數、便宜填負數，例：-10", type:"number", ph:"例：-10"},
+      {id:"promoFreq",label:"過去半年降價促銷次數", hint:"主動降價、破盤、折扣檔期的次數", type:"number", ph:"例：3"},
+      {id:"cacRatio", label:"獲取一位新客的成本，大約是首次成交毛利的…", hint:"抓感覺即可，這題看獲客是否虧本", type:"select",
+        options:[["0.5","不到一半（獲客很划算）"],["1","大約一半"],["1.5","接近打平"],["2","超過首單毛利（先虧後賺）"]]}
+    ]
+  }
+};
+
+/* ════════════════════════════════════════════════════════
+   ③ 評分對照表（Scoring Logic）
+   來源：健檢系統.xlsx 紅綠燈標準，延伸為 0-100 分
+   分數帶：90=優 / 70=正常 / 45=黃燈 / 25=紅燈
+   ════════════════════════════════════════════════════════ */
+function bandScore(v, bands){
+  for (const [limit, score] of bands) if (v <= limit) return score;
+  return bands[bands.length-1][1];
+}
+
+const SCORERS = {
+  cash: d => {
+    const months = d.fixedCost > 0 ? d.cash / d.fixedCost : 0;      // 現金支撐月數（xlsx: <3紅 <6黃）
+    const gap = d.arDays - d.apDays;                                 // 現金缺口天數
+    const s_pressure = bandScore(months, [[1,20],[3,40],[6,70],[Infinity,90]]);
+    const s_ar       = bandScore(d.arDays, [[30,90],[60,70],[90,45],[Infinity,20]]);
+    const s_ap       = bandScore(-d.apDays, [[-60,85],[-45,70],[-30,55],[Infinity,35]]);
+    const s_cycle    = bandScore(gap, [[0,90],[15,70],[30,50],[Infinity,25]]);
+    const s_blood    = Math.round((s_pressure + s_cycle) / 2);
+    return { scores:[s_blood, s_pressure, s_ar, s_ap, s_cycle], meta:{months: months.toFixed(1), gap} };
+  },
+  inventory: d => {
+    const s_lead  = bandScore(d.leadTime, [[7,90],[14,75],[30,55],[60,40],[Infinity,25]]);
+    const s_turn  = bandScore(d.invDays, [[30,90],[60,70],[90,50],[Infinity,30]]);
+    const s_stock = bandScore(d.stockouts, [[0,90],[1,75],[3,50],[Infinity,25]]);
+    const s_dead  = bandScore(d.deadStock, [[5,90],[10,70],[20,45],[Infinity,25]]);
+    const s_fcst  = Math.round((s_stock + s_dead) / 2);
+    return { scores:[s_fcst, s_turn, s_lead, s_dead, s_stock], meta:{} };
+  },
+  pricing: d => {
+    const s_margin = bandScore(-d.margin, [[-50,90],[-35,75],[-20,55],[-10,35],[Infinity,20]]);
+    const s_brand  = bandScore(-d.priceGap, [[-10,90],[0,75],[10,50],[Infinity,30]]);
+    const s_promo  = bandScore(d.promoFreq, [[0,90],[2,70],[5,45],[Infinity,25]]);
+    const s_cac    = bandScore(parseFloat(d.cacRatio), [[0.5,90],[1,70],[1.5,45],[Infinity,25]]);
+    const s_pass   = Math.round((s_margin + s_brand) / 2);
+    const s_stable = Math.round((s_promo + s_cac) / 2);
+    return { scores:[s_brand, s_margin, s_pass, s_promo, s_stable], meta:{} };
+  }
+};
+
+/* 總分 → 燈號與現場診斷文案（病灶語言來自健檢盤點表） */
+const DIAG = {
+  cash: {
+    red:   "🚩 紅燈：典型「帳面賺錢但收不到現金」體質，資金鏈斷裂風險偏高。優先動作：緊縮授信、強力催收應收帳款，並立刻盤點未來 3 個月的現金流入流出。",
+    yellow:"⚠️ 黃燈：現金體質開始緊繃，收付款節奏失衡正在慢性失血。建議重新談付款條件、縮短收款天數，把周轉缺口壓回 15 天以內。",
+    green: "✅ 體質正常：現金水位與收付節奏在安全範圍，建議每月固定監控支撐月數與 AR/AP 缺口，維持造血能力。"
+  },
+  inventory: {
+    red:   "🚩 紅燈：「該賣的沒貨、不該囤的囤一堆」，資金被庫存卡死且持續錯失營收。優先動作：清呆滯料回收現金、對熱賣品建立安全庫存機制。",
+    yellow:"⚠️ 黃燈：產銷節奏開始失調，預測與補貨機制有明顯改善空間。建議從缺貨最痛的前 3 個品項開始建立補貨警戒線。",
+    green: "✅ 體質正常：存貨與供應節奏在健康範圍，建議持續監控呆滯比例，避免旺季備貨後遺症。"
+  },
+  pricing: {
+    red:   "🚩 紅燈：「賣越多賠越多」的虛胖業績結構，價格戰正在侵蝕獲利根基。優先動作：停止無差別降價，找出真正賺錢的金雞母產品重新聚焦。",
+    yellow:"⚠️ 黃燈：獲利結構開始鬆動，對降價與促銷的依賴度偏高。建議重新盤點各產品線毛利貢獻，建立漲價/守價的談判依據。",
+    green: "✅ 體質正常：定價與獲利結構穩健，建議持續強化品牌溢價理由，鞏固價格防禦力。"
+  }
+};
+
+const MODULE_EN = { cash:"Cash flow", inventory:"Inventory", pricing:"Pricing" };
+const LAMP = {
+  red:    { text:"紅燈　需要立即處理", color:"#D64545" },
+  yellow: { text:"黃燈　需要關注",     color:"#F4B942" },
+  green:  { text:"綠燈　體質正常",     color:"#0EA599" }
+};
+
+/* ════════════════════════════════════════════════════════
+   ④ 流程控制
+   ════════════════════════════════════════════════════════ */
+let state = { module:null, answers:{}, scores:[], total:0, grade:"" };
+let radarChart = null;
+
+const $ = s => document.querySelector(s);
+
+function goStep(n){
+  document.querySelectorAll(".step").forEach(s => s.classList.remove("active"));
+  $("#step" + n).classList.add("active");
+  // 暗房 → 亮房：看見問題的那一刻，頁面打開
+  document.body.classList.toggle("lit", n >= 2);
+  window.scrollTo({ top:0, behavior:"smooth" });
+}
+
+/* ── 簽名元素：金弧進度 ── */
+const arc = { live:null, base:null, tip:null, len:0 };
+function initSpark(){
+  arc.live = $("#arcLive"); arc.base = $("#arcBase"); arc.tip = $("#sparkTip");
+  arc.len  = arc.base.getTotalLength();
+  arc.live.style.strokeDasharray = arc.len;
+  arc.live.style.strokeDashoffset = arc.len;
+}
+function setSpark(filled, total){
+  if (!arc.len) return;
+  const p = total ? filled / total : 0;
+  arc.live.style.strokeDashoffset = arc.len * (1 - p);
+  const pt = arc.base.getPointAtLength(arc.len * Math.max(p, 0.02));
+  arc.tip.setAttribute("transform", "translate(" + pt.x + "," + pt.y + ")");
+  arc.tip.style.opacity = p > 0 ? 1 : 0;
+  $("#spark").classList.toggle("ignited", p >= 1);
+  $("#sparkLabel").textContent = filled + " / " + total;
+}
+function refreshProgress(){
+  const qs = MODULES[state.module].questions;
+  let filled = 0;
+  qs.forEach(q => {
+    const el = $("#q_" + q.id);
+    if (!el) return;
+    const on = String(el.value).trim() !== "";
+    el.closest(".qcard").classList.toggle("filled", on);
+    if (on) filled++;
+  });
+  setSpark(filled, qs.length);
+}
+
+function selectModule(key){
+  state.module = key;
+  const m = MODULES[key];
+
+  document.querySelectorAll(".voice").forEach(v =>
+    v.classList.toggle("is-on", v.dataset.mod === key));
+  $("#voices").classList.add("chosen");
+
+  $("#qEyebrow").textContent = MODULE_EN[key];
+  $("#qTitle").textContent = m.title;
+
+  $("#questions").innerHTML = m.questions.map(function (q, i) {
+    const n = String(i + 1).padStart(2, "0");
+    const field = q.type === "select"
+      ? '<select id="q_' + q.id + '">' +
+          q.options.map(o => '<option value="' + o[0] + '">' + o[1] + '</option>').join("") +
+        '</select>'
+      : '<input type="number" id="q_' + q.id + '" placeholder="' + q.ph + '" inputmode="decimal">';
+    return '<div class="qcard">' +
+             '<span class="qnum">' + n + '</span>' +
+             '<div><label for="q_' + q.id + '">' + q.label + '</label>' +
+               '<div class="hint">' + q.hint + '</div></div>' +
+             '<div class="field">' + field + '</div>' +
+           '</div>';
+  }).join("");
+
+  // select 一載入就有值，算已填
+  $("#questions").addEventListener("input", refreshProgress);
+  $("#questions").addEventListener("change", refreshProgress);
+
+  goStep(1);
+  initSpark();
+  refreshProgress();
+}
+
+function backToVoices(){
+  $("#voices").classList.remove("chosen");
+  document.querySelectorAll(".voice").forEach(v => v.classList.remove("is-on"));
+  goStep(0);
+}
+
+function showResult(){
+  const m = MODULES[state.module];
+  const d = {};
+  for (const q of m.questions){
+    const el = $("#q_" + q.id);
+    const v = String(el.value).trim();
+    if (v === "") { alert("「" + q.label + "」還沒填喔"); el.focus(); return; }
+    d[q.id] = q.type === "select" ? v : parseFloat(v);
+  }
+  state.answers = d;
+
+  const result = SCORERS[state.module](d);
+  state.scores = result.scores;
+  state.total  = Math.round(result.scores.reduce((a,b) => a+b, 0) / result.scores.length);
+  state.grade  = state.total < 45 ? "red" : state.total < 65 ? "yellow" : "green";
+
+  const lamp = LAMP[state.grade];
+  $("#totalScore").textContent = state.total;
+  $("#totalScore").style.color = lamp.color;
+  const tag = $("#gradeTag");
+  tag.className = "lamp " + state.grade;
+  $("#gradeText").textContent = lamp.text;
+
+  // 雷達圖：§12 圖表色 —— 你的公司用燈號色，健康基準用中性虛線
+  if (radarChart) radarChart.destroy();
+  const rgb = { red:"214,69,69", yellow:"244,185,66", green:"14,165,153" }[state.grade];
+  radarChart = new Chart($("#radar"), {
+    type:"radar",
+    data:{ labels:m.axes, datasets:[
+      { label:"你的公司", data:state.scores, fill:true,
+        backgroundColor:"rgba(" + rgb + ",.18)", borderColor:lamp.color,
+        pointBackgroundColor:lamp.color, pointRadius:3, borderWidth:2 },
+      { label:"健康基準", data:[70,70,70,70,70], fill:false,
+        borderColor:"rgba(138,147,160,.7)", borderWidth:1.5, borderDash:[5,4], pointRadius:0 }
+    ]},
+    options:{
+      responsive:true,
+      scales:{ r:{
+        min:0, max:100, grid:{ color:"#E6E8EC" }, angleLines:{ color:"#E6E8EC" },
+        ticks:{ stepSize:25, backdropColor:"transparent", color:"#8A93A0",
+                font:{ size:10, family:"JetBrains Mono, monospace" } },
+        pointLabels:{ color:"#4B5563", font:{ size:12, family:"Noto Sans TC, sans-serif", weight:"500" } }
+      }},
+      plugins:{ legend:{ position:"bottom",
+        labels:{ boxWidth:12, boxHeight:12, usePointStyle:true, pointStyle:"circle",
+                 color:"#4B5563", font:{ size:12, family:"Noto Sans TC, sans-serif" } } } }
+    }
+  });
+
+  $("#dimBars").innerHTML = m.axes.map(function (name, i) {
+    const s = state.scores[i];
+    const c = s < 45 ? "#D64545" : s < 65 ? "#F4B942" : "#0EA599";
+    return '<div class="dim"><span class="name">' + name + '</span>' +
+           '<span class="track"><i style="width:' + s + '%;background:' + c + '"></i></span>' +
+           '<span class="val" style="color:' + c + '">' + s + '</span></div>';
+  }).join("");
+
+  $("#diagText").textContent = DIAG[state.module][state.grade];
+  goStep(2);
+}
+
+/* ════════════════════════════════════════════════════════
+   ⑤ 名單送出 → Google Apps Script
+   ════════════════════════════════════════════════════════ */
+async function submitLead(){
+  const name  = $("#leadName").value.trim();
+  const email = $("#leadEmail").value.trim();
+  if (!name)  { alert("請填寫稱呼"); $("#leadName").focus(); return; }
+  if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) {
+    alert("Email 格式看起來不太對喔"); $("#leadEmail").focus(); return;
+  }
+
+  const m = MODULES[state.module];
+  const payload = {
+    ts: new Date().toISOString(),
+    module: state.module,
+    moduleTitle: m.title,
+    name, email,
+    company: $("#leadCompany").value.trim(),
+    answers: state.answers,
+    axes: m.axes,
+    scores: state.scores,
+    total: state.total,
+    grade: state.grade,
+    diag: DIAG[state.module][state.grade]
+  };
+
+  const btn = $("#sendBtn");
+  btn.disabled = true; btn.textContent = "寄送中…";
+  try {
+    // Content-Type 用 text/plain 是為了讓它算「簡單請求」、不觸發預檢；
+    // 但不要加 mode:"no-cors" —— 加了就讀不到回應，GAS 那端壞掉前端也會假裝成功。
+    const res  = await fetch(GAS_URL, { method:"POST",
+      headers:{ "Content-Type":"text/plain;charset=utf-8" }, body: JSON.stringify(payload) });
+    const data = await res.json();
+    if (!data.ok) throw new Error(data.error || "UNKNOWN");
+    // 信真的寄出去才說「已寄出」，沒寄出就只說收到了
+    $("#doneTitle").textContent = data.mailed ? "報告已寄出" : "我們收到了";
+    $("#doneDesc").innerHTML = data.mailed
+      ? "請到信箱查收，若沒收到請看一下垃圾郵件匣<br>想更快搞懂報告，可以加 LINE 直接跟顧問聊"
+      : "報告信寄送時遇到問題，顧問會直接與您聯繫<br>也可以加 LINE 直接跟顧問聊";
+    goStep(3);
+  } catch(e) {
+    alert("送出失敗，請稍後再試，或直接加 LINE 聯繫我們");
+    btn.disabled = false; btn.textContent = "寄給我完整報告";
+  }
+}
+
+/* 三句真心話 → 選一句 */
+document.querySelectorAll(".voice").forEach(function (v) {
+  v.addEventListener("click", function(){ selectModule(v.dataset.mod); });
+});
+</script>
+</body>
+</html>
